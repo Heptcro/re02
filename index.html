@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我们的时光</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        .bg-wrap {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            width: 100%;
+        }
+
+        .bg-img {
+            width: 100%;
+            position: relative;
+        }
+
+        .middle.Blurkg {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            position: relative;
+            padding: 15px;
+            background-color: rgba(0, 0, 0, 0);
+            border-radius: 15px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .img-male {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .avatarArea {
+            position: relative;
+            width: 80px;
+            height: 80px;
+        }
+
+        .avatarFrame {
+            width: 100%;
+            height: 100%;
+            border-radius: 50% !important;
+            position: relative;
+            z-index: 2;
+        }
+
+        .aiv_touxiang {
+            width: 100%;
+            height: 100%;
+            border-radius: 50% !important;
+            max-width: 100% !important;
+            border: 1px solid #fff;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            object-fit: cover;
+        }
+
+        .shadow-blur {
+            margin-top: 15px;
+            font-size: 14px;
+            color: white;
+            background-color: rgba(51, 51, 51, 0.93);
+            padding: 1px 12px;
+            border-radius: 15px;
+            display: inline-block;
+            text-shadow: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.42);
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .love-icon {
+            width: 35px;
+            height: 35px;
+            animation: heartbeat 1.5s ease-in-out infinite;
+            margin: 0 5px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .img-female {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .baiyi-love {
+            text-align: center !important;
+        }
+
+        .baiyi-text {
+            font-size: 25px;
+            color: #282727;
+        }
+
+        #time-display {
+            text-align: center;
+            font-size: 20px;
+            color: #282727;
+        }
+
+        #time-display span {
+            font-size: 25px;
+            color: #282727;
+        }
+
+        #time-display n {
+            font-size: 30px;
+            margin-right: 8px;
+            font-weight: 800;
+            color: #282727;
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .time_card {
+            background-color: rgba(51, 51, 51, 0.93);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            padding: 12px;
+            width: calc(50% - 20px);
+            min-width: 160px;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+            cursor: pointer;
+        }
+
+        .time_card:hover {
+            transform: scale(1.05);
+        }
+
+        .left_info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .left_info svg {
+            fill: #ff6b6b;
+            width: 30px;
+            height: 30px;
+        }
+
+        .day_title {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .time_m {
+            display: flex;
+            flex-direction: column;
+            font-size: 1rem;
+        }
+
+        .source {
+            font-weight: bold;
+        }
+
+        .format {
+            color: #ccc;
+        }
+
+        /* 底部创意区域 */
+        .memories-section {
+            background-color: #fff;
+            padding: 40px 20px;
+            margin-top: 20px;
+        }
+        
+        .memories-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .memories-title {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 30px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .memories-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 10%;
+            width: 80%;
+            height: 3px;
+            background-color: #ff6b6b;
+            border-radius: 3px;
+        }
+        
+        .quotes-container {
+            background-color: #f9f9f9;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .love-quote {
+            font-size: 18px;
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+        
+        .quote-author {
+            color: #777;
+            font-size: 16px;
+        }
+        
+        .timeline-preview {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+            overflow-x: auto;
+            padding: 10px 0;
+        }
+        
+        .timeline-item {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: #ffecec;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ff6b6b;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+        
+        .timeline-item:hover {
+            transform: scale(1.1) rotate(5deg);
+            background-color: #ff6b6b;
+            color: white;
+        }
+        
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            margin-top: 40px;
+        }
+        
+        .footer-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .footer-heart {
+            color: #ff6b6b;
+            animation: heartbeat 1.5s ease-in-out infinite;
+            display: inline-block;
+            margin: 0 5px;
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 767px) {
+            .middle.Blurkg { padding: 10px; }
+            .avatarArea { width: 90px; height: 90px; }
+            .shadow-blur { font-size: 12px; }
+            .love-icon { width: 25px; height: 25px; margin: 0 3px; }
+            .row { padding: 10px; gap: 10px; max-width: 100%; }
+            .time_card { padding: 12px; min-width: 130px; width: calc(50% - 10px); }
+            .left_info svg { width: 20px; height: 20px; }
+            .day_title { font-size: 0.8rem; }
+            .time_m { font-size: 0.7rem; }
+            .baiyi-text { font-size: 20px; }
+            #time-display n { font-size: 24px; }
+            
+            .memories-title { font-size: 24px; }
+            .love-quote { font-size: 16px; }
+        }
+
+        @media (max-width: 360px) {
+            .memories-section { padding: 20px 10px; }
+            .quotes-container { padding: 20px 10px; }
+            .timeline-item { width: 80px; height: 80px; font-size: 14px; }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 作者信息 -->
+    <!-- Author：TC -->
+
+    <!-- 页面结构 -->
+    <div class="bg-wrap central limg">
+        <div class="bg-img">
+            <div class="middle Blurkg">
+                <div class="img-male">
+                    <div class="avatarArea">
+                        <img draggable="false" class="avatarFrame lazy entered loaded" data-src="biankuang.png"
+                            style="transform: scale(1.6);top: 2px;left: 2px;" data-ll-status="loaded"
+                            src="biankuang.png">
+                        <img class="aiv_touxiang entered loaded" src="ptc-avatar.svg">
+                    </div>
+                    <span class="shadow-blur">Qiu.</span>
+                </div>
+                <div class="love-icon" style="display: flex; align-items: center; justify-content: center;">
+                    <img draggable="false" src="aixin.svg" style="width: 100%; height: 100%;">
+                </div>
+                <div class="img-female">
+                    <div class="avatarArea">
+                        <img draggable="false" class="avatarFrame lazy entered loaded" data-src="biankuang.png"
+                            style="transform: scale(1.6);top: 2px;left: 2px;" data-ll-status="loaded"
+                            src="biankuang.png">
+                        <img class="aiv_touxiang entered loaded" src="zwh-avatar.svg">
+                    </div>
+                    <span class="shadow-blur">Liang</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="baiyi-love" style="margin-top: 10px;">
+        <div class="baiyi-text">这是我们一起走过的</div>
+        <div id="time-display"></div>
+    </div>
+
+    <div class="row central" style="margin-top: 10px;">
+        <div class="time_card col-lg-6 col-md-6 col-sm-12 col-sm-x-12 shadow-blur aos-init aos-animate" aos="flip-up"
+            aos-duration="500">
+            <div class="day_cont">
+                <div class="left_info" data-title="周年纪念日">
+                    <svg t="1715052607396" style="margin-right:0.5rem!important;" class="icon" viewBox="0 0 1024 1024"
+                        version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="9366" width="100" height="100">
+                        <path
+                            d="M810 249.5c-38.6-38.6-83.5-68.8-133.5-90-51.8-21.9-106.8-33-163.5-33s-111.7 11.1-163.5 33c-50 21.2-94.9 51.4-133.5 90-38.6 38.6-68.8 83.5-90 133.5-21.9 51.8-33 106.8-33 163.5s11.1 111.7 33 163.5c21.2 50 51.4 94.9 90 133.5s83.5 68.8 133.5 90c51.8 21.9 106.8 33 163.5 33s111.7-11.1 163.5-33c50-21.2 94.9-51.4 133.5-90S878.8 760 900 710c21.9-51.8 33-106.8 33-163.5S921.9 434.8 900 383c-21.2-50-51.5-94.9-90-133.5z m-297 657c-198.5 0-360-161.5-360-360s161.5-360 360-360 360 161.5 360 360-161.5 360-360 360zM357 96.5c-42.3-49.6-141-53.3-208.1 4s-77.3 153.9-35 203.5L357 96.5zM877.2 100.5C810 43.2 711.3 47 669 96.5L912.2 304c42.3-49.6 32.1-146.2-35-203.5z"
+                            p-id="9367" fill="#f0f0f0"></path>
+                        <path
+                            d="M667.1 558.6H543V351c0-17.9-14.5-32.4-32.4-32.4-15.2 0-27.6 12.3-27.6 27.6v272.4h182.2c17.1 0 30.9-13.8 30.9-30.9 0-16.1-13-29.1-29-29.1z"
+                            p-id="9368" fill="#f0f0f0"></path>
+                    </svg>
+                    <span class="day_title" id="anniversaryTitle">周年纪念日</span>
+                </div>
+                <div class="time_m">
+                    <b class="source" id="anniversaryDate">2025-02-19</b>
+                    <i class="format" id="countdownDisplay"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="time_card col-lg-6 col-md-6 col-sm-12 col-sm-x-12 shadow-blur aos-init aos-animate" aos="flip-up"
+            aos-duration="500">
+            <div class="day_cont">
+                <div class="left_info" data-title="第一次相遇">
+                    <svg t="1715052082901" style="margin-right:0.5rem!important;" class="icon" viewBox="0 0 1024 1024"
+                        version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4508" width="100" height="100">
+                        <path
+                            d="M470.4 204.8l44.8 44.8 44.8-44.8c99.2-99.2 262.4-99.2 361.6 0 48 48 73.6 112 73.6 179.2 0 19.2-12.8 32-32 32s-32-12.8-32-32c0-51.2-19.2-99.2-57.6-134.4-73.6-73.6-195.2-73.6-272 0l-67.2 67.2c-12.8 12.8-32 12.8-44.8 0l-67.2-67.2c-73.6-73.6-195.2-73.6-272 0-73.6 73.6-73.6 195.2 0 272L512 883.2c12.8 12.8 12.8 32 0 44.8s-32 12.8-44.8 0L105.6 566.4c-99.2-99.2-99.2-262.4 0-361.6 102.4-102.4 262.4-102.4 364.8 0z m176 710.4L425.6 694.4c-57.6-57.6-57.6-147.2 0-204.8 57.6-57.6 147.2-57.6 204.8 0l57.6 57.6 57.6-57.6c57.6-57.6 147.2-57.6 204.8 0 57.6 57.6 57.6 147.2 0 204.8L729.6 915.2c-9.6 9.6-25.6 16-38.4 16-19.2 0-32-6.4-44.8-16z m256-265.6c32-32 32-83.2 0-112-32-32-83.2-32-112 0l-80 80c-12.8 12.8-32 12.8-44.8 0l-80-80c-32-32-83.2-32-112 0-32 32-32 83.2 0 112L688 864l214.4-214.4z"
+                            p-id="4509" fill="#f0f0f0"></path>
+                    </svg>
+                    <span class="day_title" id="firstMeetTitle">相遇的那天</span>
+                </div>
+                <div class="time_m">
+                    <b class="source" id="firstMeetDate">2025-10-01</b>
+                    <i class="format" id="firstMeetCountdown"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row central">
+        <div class="time_card col-lg-6 col-md-6 col-sm-12 col-sm-x-12 shadow-blur aos-init aos-animate" aos="flip-up"
+            aos-duration="500">
+            <div class="day_cont">
+                <div class="left_info" data-title="彤超的生日">
+                    <svg t="1715052082901" style="margin-right:0.5rem!important;" class="icon" viewBox="0 0 1024 1024"
+                        version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4508" width="100" height="100">
+                        <path
+                            d="M470.4 204.8l44.8 44.8 44.8-44.8c99.2-99.2 262.4-99.2 361.6 0 48 48 73.6 112 73.6 179.2 0 19.2-12.8 32-32 32s-32-12.8-32-32c0-51.2-19.2-99.2-57.6-134.4-73.6-73.6-195.2-73.6-272 0l-67.2 67.2c-12.8 12.8-32 12.8-44.8 0l-67.2-67.2c-73.6-73.6-195.2-73.6-272 0-73.6 73.6-73.6 195.2 0 272L512 883.2c12.8 12.8 12.8 32 0 44.8s-32 12.8-44.8 0L105.6 566.4c-99.2-99.2-99.2-262.4 0-361.6 102.4-102.4 262.4-102.4 364.8 0z m176 710.4L425.6 694.4c-57.6-57.6-57.6-147.2 0-204.8 57.6-57.6 147.2-57.6 204.8 0l57.6 57.6 57.6-57.6c57.6-57.6 147.2-57.6 204.8 0 57.6 57.6 57.6 147.2 0 204.8L729.6 915.2c-9.6 9.6-25.6 16-38.4 16-19.2 0-32-6.4-44.8-16z m256-265.6c32-32 32-83.2 0-112-32-32-83.2-32-112 0l-80 80c-12.8 12.8-32 12.8-44.8 0l-80-80c-32-32-83.2-32-112 0-32 32-32 83.2 0 112L688 864l214.4-214.4z"
+                            p-id="4509" fill="#f0f0f0"></path>
+                    </svg>
+                    <span class="day_title">彤超的生日</span>
+                </div>
+                <div class="time_m">
+                    <b class="source" id="birthday">2002-11-12</b>
+                    <i class="format"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="time_card col-lg-6 col-md-6 col-sm-12 col-sm-x-12 shadow-blur aos-init aos-animate" aos="flip-up"
+            aos-duration="500">
+            <div class="day_cont">
+                <div class="left_info" data-title="文慧的生日">
+                    <svg t="1715052082901" style="margin-right:0.5rem!important;" class="icon" viewBox="0 0 1024 1024"
+                        version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4508" width="100" height="100">
+                        <path
+                            d="M470.4 204.8l44.8 44.8 44.8-44.8c99.2-99.2 262.4-99.2 361.6 0 48 48 73.6 112 73.6 179.2 0 19.2-12.8 32-32 32s-32-12.8-32-32c0-51.2-19.2-99.2-57.6-134.4-73.6-73.6-195.2-73.6-272 0l-67.2 67.2c-12.8 12.8-32 12.8-44.8 0l-67.2-67.2c-73.6-73.6-195.2-73.6-272 0-73.6 73.6-73.6 195.2 0 272L512 883.2c12.8 12.8 12.8 32 0 44.8s-32 12.8-44.8 0L105.6 566.4c-99.2-99.2-99.2-262.4 0-361.6 102.4-102.4 262.4-102.4 364.8 0z m176 710.4L425.6 694.4c-57.6-57.6-57.6-147.2 0-204.8 57.6-57.6 147.2-57.6 204.8 0l57.6 57.6 57.6-57.6c57.6-57.6 147.2-57.6 204.8 0 57.6 57.6 57.6 147.2 0 204.8L729.6 915.2c-9.6 9.6-25.6 16-38.4 16-19.2 0-32-6.4-44.8-16z m256-265.6c32-32 32-83.2 0-112-32-32-83.2-32-112 0l-80 80c-12.8 12.8-32 12.8-44.8 0l-80-80c-32-32-83.2-32-112 0-32 32-32 83.2 0 112L688 864l214.4-214.4z"
+                            p-id="4509" fill="#f0f0f0"></path>
+                    </svg>
+                    <span class="day_title">文慧的生日</span>
+                </div>
+                <div class="time_m">
+                    <b class="source">2002-09-16</b>
+                    <i class="format"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+     <!-- 底部创意区域 -->
+    <section class="memories-section">
+        <div class="memories-container">
+            <h2 class="memories-title">爱情宣言</h2>
+            
+            <div class="quotes-container">
+                <p class="love-quote">"我愿意用一生的时间，陪你看遍四季风景，从清晨到黄昏，从年少到白头。"</p>
+                <p class="quote-author">—— 我们的约定</p>
+            </div>
+            
+            <h3>我们的时光胶囊</h3>
+            <p>记录我们每个珍贵的瞬间</p>
+            
+            <div class="timeline-preview">
+                <div class="timeline-item" title="第一次约会">约会</div>
+                <div class="timeline-item" title="第一次牵手">牵手</div>
+                <div class="timeline-item" title="第一次旅行">旅行</div>
+                <div class="timeline-item" title="第一个生日">生日</div>
+                <div class="timeline-item" title="未来可期">未来</div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p>用时光见证爱情 <span class="footer-heart">❤</span> 我们的故事，未完待续...</p>
+            <p>© 2025 我们的时光 | 永远在一起</p>
+        </div>
+    </footer>
+
+    <!-- 1. 先引入 lunar 库 -->
+    <script src="https://cdn.jsdelivr.net/npm/lunar-javascript@2.4.1/lib/lunar.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/lunar-javascript@2.4.1/lib/lunar.min.js"></script>
+    <script>
+        // 转换农历生日的函数
+        function convertToLunar(elementId, dateStr) {
+            const [year, month, day] = dateStr.split('-').map(Number);
+            const lunar = Lunar.fromDate(new Date(year, month - 1, day));
+            const lunarStr = lunar.getYearInGanZhi() + '年' +
+                lunar.getMonthInChinese() + '月' +
+                lunar.getDayInChinese();
+            document.getElementById(elementId).textContent = lunarStr;
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // 转换彤超的生日
+            const tongchaoDate = document.getElementById('birthday').textContent;
+            convertToLunar('birthday', tongchaoDate);
+
+            // 转换文慧的生日（需要先给她的日期元素加一个 id）
+            const wenhuiDateElement = document.querySelector('.row:nth-child(2) .time_card:nth-child(2) .source');
+            const wenhuiDateStr = wenhuiDateElement.textContent.trim();
+            // 动态添加 id 或直接操作
+            const tempId = 'wenhui-birthday';
+            wenhuiDateElement.id = tempId;
+            convertToLunar(tempId, wenhuiDateStr);
+        });
+
+        // 你原有的时间计算逻辑，保持不变
+        function formatToISO8601(dateStr) {
+            var parts = dateStr.split(' ');
+            var dateParts = parts[0].split('-');
+            var timeParts = parts[1].split(':');
+            return dateParts[0] + '-' + (dateParts[1].length === 1 ? '0' : '') + dateParts[1] + '-' + (dateParts[2].length === 1 ? '0' : '') + dateParts[2] + 'T' + timeParts[0] + ':' + timeParts[1] + ':' + timeParts[2];
+        }
+
+        var startDateStr = '2025-2-19 20:59:00';
+        var startDate = new Date(formatToISO8601(startDateStr));
+        var timeDisplay = document.getElementById('time-display');
+
+        function updateTime() {
+            var now = new Date();
+            var timeDiff = now - startDate;
+            var days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+            timeDisplay.innerHTML = `<n class="num">${days}</n><span class="chinese">天 </span>` +
+                `<n class="num">${('0' + hours).slice(-2)}</n><span class="chinese">时 </span>` +
+                `<n class="num">${('0' + minutes).slice(-2)}</n><span class="chinese">分 </span>` +
+                `<n class="num">${('0' + seconds).slice(-2)}</n><span class="chinese">秒</span>`;
+        }
+
+        updateTime();
+        setInterval(updateTime, 1000);
+
+        // 周年纪念日倒计时
+        document.addEventListener('DOMContentLoaded', function () {
+            const anniversaryDateElement = document.getElementById('anniversaryDate');
+            const countdownElement = document.getElementById('countdownDisplay');
+            if (anniversaryDateElement) {
+                const anniversaryStr = anniversaryDateElement.textContent;
+                const [year, month, day] = anniversaryStr.split('-').map(Number);
+                const nextAnniversary = new Date(year + 1, month - 1, day);
+                const currentDate = new Date();
+                const timeDiff = nextAnniversary - currentDate;
+                const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+                countdownElement.textContent = `还有 ${daysDiff} 天`;
+            }
+        });
+
+        // 相遇倒计时
+        document.addEventListener('DOMContentLoaded', function () {
+            const firstMeetDateElement = document.getElementById('firstMeetDate');
+            const countdownElement = document.getElementById('firstMeetCountdown');
+            if (firstMeetDateElement) {
+                const meetDateStr = firstMeetDateElement.textContent;
+                const [year, month, day] = meetDateStr.split('-').map(Number);
+                const meetDate = new Date(year, month - 1, day);
+                const currentDate = new Date();
+                const timeDiff = currentDate - meetDate;
+                const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+                countdownElement.textContent = `过了 ${daysDiff} 天`;
+            }
+        });
+
+        // 生日倒计时（农历不影响倒计时天数）
+        document.addEventListener('DOMContentLoaded', function () {
+            const birthdayElements = document.querySelectorAll('.source');
+            const countdownElements = document.querySelectorAll('.format');
+
+            birthdayElements.forEach((element, index) => {
+                const birthdayStr = element.textContent;
+                const [birthYear, birthMonth, birthDay] = birthdayStr.split('-').map(Number);
+
+                const currentDate = new Date();
+                const currentYear = currentDate.getFullYear();
+                let thisYearBirthday = new Date(currentYear, birthMonth - 1, birthDay);
+
+                if (thisYearBirthday < currentDate) {
+                    thisYearBirthday = new Date(currentYear + 1, birthMonth - 1, birthDay);
+                }
+
+                const timeDiff = thisYearBirthday - currentDate;
+                const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+                countdownElements[index].textContent = `还有${daysDiff}天`;
+            });
+        });
+    </script>
+</body>
+
+</html>
